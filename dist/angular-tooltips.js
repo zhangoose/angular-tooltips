@@ -6,6 +6,16 @@
  * http://720kb.github.io/angular-tooltips
  * 
  * MIT license
+ * Thu Apr 27 2017
+ */
+/*
+ * angular-tooltips
+ * 1.1.10
+ *
+ * Angular.js tooltips module.
+ * http://720kb.github.io/angular-tooltips
+ *
+ * MIT license
  * Wed Jan 25 2017
  */
 /*global angular,window*/
@@ -107,6 +117,12 @@
 
       attributesToAdd['tooltip-hide-trigger'] = element.attr('tooltip-hide-trigger');
       element.removeAttr('tooltip-hide-trigger');
+    }
+
+    if (element.attr('tooltip-show-tooltip') !== undefined) {
+
+      attributesToAdd['tooltip-show-tooltip'] = element.attr('tooltip-show-tooltip');
+      element.removeAttr('tooltip-show-tooltip');
     }
 
     if (element.attr('tooltip-smart') !== undefined) {
@@ -219,7 +235,8 @@
       'closeButton': false,
       'size': '',
       'speed': 'steady',
-      'tooltipTemplateUrlCache': false
+      'tooltipTemplateUrlCache': false,
+      'tooltipShowTooltip': null
     };
 
     return {
@@ -263,6 +280,7 @@
         throw new Error('You can not have a controller without a template or templateUrl defined');
       }
 
+
       var oldTooltipSide = '_' + tooltipsConf.side
         , oldTooltipShowTrigger = tooltipsConf.showTrigger
         , oldTooltipHideTrigger = tooltipsConf.hideTrigger
@@ -273,6 +291,7 @@
       $attrs.tooltipSide = $attrs.tooltipSide || tooltipsConf.side;
       $attrs.tooltipShowTrigger = $attrs.tooltipShowTrigger || tooltipsConf.showTrigger;
       $attrs.tooltipHideTrigger = $attrs.tooltipHideTrigger || tooltipsConf.hideTrigger;
+      $attrs.tooltipShowTooltip = $attrs.tooltipShowTooltip || tooltipsConf.showTooltip;
       $attrs.tooltipClass = $attrs.tooltipClass || tooltipsConf.class;
       $attrs.tooltipSmart = $attrs.tooltipSmart === 'true' || tooltipsConf.smart;
       $attrs.tooltipCloseButton = $attrs.tooltipCloseButton || tooltipsConf.closeButton.toString();
@@ -660,6 +679,13 @@
               oldTooltipHideTrigger = newValue;
             }
           }
+          , onTooltipShowTooltip = function onTooltipShowTooltip(newValue) {
+            if (newValue == 'true') {
+              tooltipElement.addClass('active');
+            } else {
+              tooltipElement.removeClass('active');
+            }
+          }
           , onTooltipClassChange = function onTooltipClassChange(newValue) {
 
             if (newValue) {
@@ -748,6 +774,7 @@
           , unregisterOnTooltipSideChangeObserver = $attrs.$observe('tooltipSide', onTooltipSideChange)
           , unregisterOnTooltipShowTrigger = $attrs.$observe('tooltipShowTrigger', onTooltipShowTrigger)
           , unregisterOnTooltipHideTrigger = $attrs.$observe('tooltipHideTrigger', onTooltipHideTrigger)
+          , unregisterOnTooltipShowTooltip = $attrs.$observe('tooltipShowTooltip', onTooltipShowTooltip)
           , unregisterOnTooltipClassChange = $attrs.$observe('tooltipClass', onTooltipClassChange)
           , unregisterOnTooltipSmartChange = $attrs.$observe('tooltipSmart', onTooltipSmartChange)
           , unregisterOnTooltipCloseButtonChange = $attrs.$observe('tooltipCloseButton', onTooltipCloseButtonChange)
