@@ -280,7 +280,6 @@
         throw new Error('You can not have a controller without a template or templateUrl defined');
       }
 
-
       var oldTooltipSide = '_' + tooltipsConf.side
         , oldTooltipShowTrigger = tooltipsConf.showTrigger
         , oldTooltipHideTrigger = tooltipsConf.hideTrigger
